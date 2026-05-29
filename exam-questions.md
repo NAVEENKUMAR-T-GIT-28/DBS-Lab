@@ -1,6 +1,25 @@
 # DBMS – Complete 16-Mark Answers (Semester Exam)
 
+## Table of Contents
+
+- [Q1. Use DDL Commands to Create and Modify Database Tables](#q1-use-ddl-commands-to-create-and-modify-database-tables)
+- [Q2. Differentiate Entity Set and Attribute with Suitable Examples](#q2-differentiate-entity-set-and-attribute-with-suitable-examples)
+- [Q3. Demonstrate Database Operations – Creating a Table and Retrieving Records Using SQL](#q3-demonstrate-database-operations--creating-a-table-and-retrieving-records-using-sql)
+- [Q4. Apply DDL, DML, and DCL Commands in a Banking Application](#q4-apply-ddl-dml-and-dcl-commands-in-a-banking-application)
+- [Q5. What is Normalization? Explain 3NF, 4NF, and BCNF with Examples](#q5-what-is-normalization-explain-3nf-4nf-and-bcnf-with-examples)
+- [Q6. Illustrate an ER Model for a Library Management System](#q6-illustrate-an-er-model-for-a-library-management-system)
+- [Q7. ACID Properties – Examine and Implement in Transaction Processing](#q7-acid-properties--examine-and-implement-in-transaction-processing)
+- [Q8. Compare Conflict Serializability and View Serializability in DBMS](#q8-compare-conflict-serializability-and-view-serializability-in-dbms)
+- [Q9. Examine Single-Level and Multi-Level Indexing for Large Databases](#q9-examine-single-level-and-multi-level-indexing-for-large-databases)
+- [Q10. SQL Queries Using IN, LIKE, BETWEEN, and EXISTS Operators](#q10-sql-queries-using-in-like-between-and-exists-operators)
+- [Q11. Functional Dependency and Minimal Cover](#q11-functional-dependency-and-minimal-cover)
+- [Q12. NoSQL Models for E-Commerce – Key-Value, Document, Column-Family, Graph](#q12-nosql-models-for-e-commerce--key-value-document-column-family-graph)
+- [Q13. Deadlock Resolution Techniques in DBMS](#q13-deadlock-resolution-techniques-in-dbms)
+- [Q14. Log-Based Recovery Techniques in DBMS](#q14-log-based-recovery-techniques-in-dbms)
+- [Q15. RAID Levels – Comparison Based on Redundancy, Performance, and Cost](#q15-raid-levels--comparison-based-on-redundancy-performance-and-cost)
+
 ---
+
 
 ## Q1. Use DDL Commands to Create and Modify Database Tables
 
