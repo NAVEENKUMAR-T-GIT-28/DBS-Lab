@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBMS – Complete 16-Mark Answers</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --border-light: #ede9e3;
+    --text-primary: #1a1814;
+    --text-secondary: #5a5550;
+    --text-muted: #9a9590;
+    --accent: #2d5a8e;
+    --accent-light: #e8f0f9;
+    --accent-mid: #c5d8ef;
+    --code-bg: #1e1e1e;
+    --code-text: #d4d4d4;
+    --code-keyword: #569cd6;
+    --code-string: #ce9178;
+    --code-comment: #6a9955;
+    --code-function: #dcdcaa;
+    --table-header: #f0ede7;
+    --table-stripe: #faf9f7;
+    --blockquote-bg: #fff8ec;
+    --blockquote-border: #d4a017;
+    --tag-bg: #eef4fb;
+    --tag-text: #2d5a8e;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+    --radius: 6px;
+    --radius-lg: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15.5px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    box-shadow: var(--shadow-sm);
+  }
+  .site-header h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .site-header h1 span {
+    color: var(--accent);
+  }
+  .header-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── INTRO CARD ── */
+  .intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+  .intro-card h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .intro-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .q-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── EXPAND ALL ── */
+  .controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .q-toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    transition: background 0.15s;
+  }
+  .q-toggle:hover {
+    background: var(--table-stripe);
+  }
+  details[open] > .q-toggle {
+    border-bottom: 1px solid var(--border-light);
+    background: var(--accent-light);
+  }
+  .q-num {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+  }
+  details[open] .q-num {
+    background: var(--accent);
+  }
+  .q-title {
+    flex: 1;
+    font-size: 0.965rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  details[open] .q-title {
+    color: var(--accent);
+  }
+  .q-chevron {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+  details[open] .q-chevron {
+    transform: rotate(180deg);
+    color: var(--accent);
+  }
+  .q-marks {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--table-header);
+    padding: 3px 9px;
+    border-radius: 100px;
+    border: 1px solid var(--border-light);
+  }
+
+  /* ── CONTENT ── */
+  .q-body {
+    padding: 28px 32px 32px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .q-body h3 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 28px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .q-body h3:first-child { margin-top: 0; }
+
+  .q-body h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 20px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .q-body p {
+    margin: 10px 0;
+    color: var(--text-primary);
+  }
+
+  .q-body ul, .q-body ol {
+    padding-left: 22px;
+    margin: 10px 0;
+  }
+  .q-body li {
+    margin: 5px 0;
+    color: var(--text-primary);
+  }
+  .q-body li::marker { color: var(--accent); }
+
+  .q-body strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .q-body em {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 1.02em;
+  }
+  .q-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--accent-mid);
+  }
+
+  /* ── CODE BLOCK ── */
+  .q-body pre {
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin: 14px 0;
+    overflow-x: auto;
+    position: relative;
+    box-shadow: var(--shadow-md);
+  }
+  .q-body pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.825rem;
+    background: none;
+    color: var(--code-text);
+    padding: 0;
+    border: none;
+    line-height: 1.65;
+    display: block;
+    white-space: pre;
+  }
+  .lang-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* SQL syntax highlight */
+  .kw  { color: #569cd6; }
+  .str { color: #ce9178; }
+  .cmt { color: #6a9955; font-style: italic; }
+  .num { color: #b5cea8; }
+  .fn  { color: #dcdcaa; }
+  .typ { color: #4ec9b0; }
+
+  /* ── BLOCKQUOTE ── */
+  .q-body blockquote {
+    background: var(--blockquote-bg);
+    border-left: 3px solid var(--blockquote-border);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* ── TABLES ── */
+  .q-body .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .q-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .q-body thead tr {
+    background: var(--table-header);
+  }
+  .q-body th {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .q-body td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-primary);
+    vertical-align: top;
+  }
+  .q-body tr:last-child td { border-bottom: none; }
+  .q-body tbody tr:nth-child(even) { background: var(--table-stripe); }
+
+  /* ── DIVIDER ── */
+  .q-body hr {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 22px 0;
+  }
+
+  /* ── CONCLUSION ── */
+  .conclusion-box {
+    background: linear-gradient(135deg, var(--accent-light) 0%, #f0f5fc 100%);
+    border: 1px solid var(--accent-mid);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-top: 24px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .conclusion-box strong { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .site-header, .controls { display: none; }
+    details { open: true; }
+    details > summary { display: none; }
+    .q-body { display: block !important; }
+  }
+
+  @media (max-width: 640px) {
+    .wrapper { padding: 20px 14px 60px; }
+    .q-body { padding: 20px 18px 22px; }
+    .site-header { padding: 0 18px; }
+    .site-header h1 { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>DBMS <span>16-Mark</span> Answer Guide</h1>
+  <span class="header-meta">Semester Examination Preparation</span>
+</header>
+
+<div class="wrapper">
+
+  <div class="intro-card">
+    <h2>Database Management Systems</h2>
+    <p>Complete 16-mark answers covering all major DBMS topics. Click any question to expand its full answer. Each answer is structured with definitions, examples, SQL code, tables, and a conclusion.</p>
+    <div class="q-count">&#9642; 15 Questions &nbsp;&middot;&nbsp; 16 Marks Each &nbsp;&middot;&nbsp; Exam Ready</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="toggleAll(true)">Expand All</button>
+    <button class="btn" onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ Q1 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q1</span>
+      <span class="q-title">Use DDL Commands to Create and Modify Database Tables</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+
+      <h3>Introduction</h3>
+      <p><strong>Data Definition Language (DDL)</strong> is a subset of SQL used to define, modify, and delete database structures such as tables, indexes, and schemas. DDL commands do not manipulate data directly — they operate on the <em>structure (schema)</em> of the database. The main DDL commands are <strong>CREATE, ALTER, DROP, TRUNCATE, and RENAME</strong>.</p>
+
+      <h3>1. CREATE Command</h3>
+      <p>The <code>CREATE</code> command is used to create a new table or database.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre><code><span class="kw">CREATE TABLE</span> table_name (
+    column1 datatype constraint,
+    column2 datatype constraint,
+    ...
+);</code></pre>
+
+      <p><strong>Example – Create a Student Table:</strong></p>
+      <pre><code><span class="kw">CREATE TABLE</span> Student (
+    StudentID   <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>,
+    Name        <span class="typ">VARCHAR</span>(50) <span class="kw">NOT NULL</span>,
+    Age         <span class="typ">INT</span>,
+    Department  <span class="typ">VARCHAR</span>(30),
+    Email       <span class="typ">VARCHAR</span>(50) <span class="kw">UNIQUE</span>
+);</code></pre>
+
+      <p><strong>Example – Create a Courses Table:</strong></p>
+      <pre><code><span class="kw">CREATE TABLE</span> Courses (
+    CourseID    <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>,
+    CourseName  <span class="typ">VARCHAR</span>(100) <span class="kw">NOT NULL</span>,
+    Credits     <span class="typ">INT</span> <span class="kw">DEFAULT</span> 3,
+    StudentID   <span class="typ">INT</span>,
+    <span class="kw">FOREIGN KEY</span> (StudentID) <span class="kw">REFERENCES</span> Student(StudentID)
+);</code></pre>
+
+      <h3>2. ALTER Command</h3>
+      <p>The <code>ALTER</code> command modifies an existing table structure — adding, modifying, or dropping columns.</p>
+      <pre><code><span class="cmt">-- a) Add a new column</span>
+<span class="kw">ALTER TABLE</span> Student <span class="kw">ADD</span> PhoneNumber <span class="typ">VARCHAR</span>(15);
+
+<span class="cmt">-- b) Modify an existing column</span>
+<span class="kw">ALTER TABLE</span> Student <span class="kw">MODIFY</span> Age <span class="typ">SMALLINT NOT NULL</span>;
+
+<span class="cmt">-- c) Drop a column</span>
+<span class="kw">ALTER TABLE</span> Student <span class="kw">DROP COLUMN</span> PhoneNumber;
+
+<span class="cmt">-- d) Add a constraint</span>
+<span class="kw">ALTER TABLE</span> Student <span class="kw">ADD CONSTRAINT</span> chk_age <span class="kw">CHECK</span> (Age &gt;= 17);
+
+<span class="cmt">-- e) Rename a column (MySQL)</span>
+<span class="kw">ALTER TABLE</span> Student <span class="kw">RENAME COLUMN</span> Email <span class="kw">TO</span> EmailAddress;</code></pre>
+
+      <h3>3. DROP Command</h3>
+      <p>Permanently removes a table and all its data from the database.</p>
+      <pre><code><span class="kw">DROP TABLE</span> Courses;
+<span class="kw">DROP DATABASE</span> CollegeDB;</code></pre>
+      <blockquote>⚠️ DROP cannot be rolled back. All data is permanently deleted.</blockquote>
+
+      <h3>4. TRUNCATE Command</h3>
+      <p>Removes all rows from a table but keeps the table structure intact.</p>
+      <pre><code><span class="kw">TRUNCATE TABLE</span> Student;</code></pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>DROP</th><th>TRUNCATE</th></tr></thead>
+          <tbody>
+            <tr><td>Removes structure</td><td>Yes</td><td>No</td></tr>
+            <tr><td>Removes data</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Rollback possible</td><td>No</td><td>No</td></tr>
+            <tr><td>Faster</td><td>No</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5. RENAME Command</h3>
+      <pre><code><span class="kw">RENAME TABLE</span> Student <span class="kw">TO</span> Students;
+<span class="cmt">-- OR</span>
+<span class="kw">ALTER TABLE</span> Students <span class="kw">RENAME TO</span> StudentInfo;</code></pre>
+
+      <h3>Summary Table of DDL Commands</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Command</th><th>Purpose</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>CREATE</td><td>Creates new table/DB</td><td><code>CREATE TABLE Student(...)</code></td></tr>
+            <tr><td>ALTER</td><td>Modifies table structure</td><td><code>ALTER TABLE Student ADD...</code></td></tr>
+            <tr><td>DROP</td><td>Deletes table/DB permanently</td><td><code>DROP TABLE Student</code></td></tr>
+            <tr><td>TRUNCATE</td><td>Removes all rows, keeps structure</td><td><code>TRUNCATE TABLE Student</code></td></tr>
+            <tr><td>RENAME</td><td>Renames a table</td><td><code>RENAME TABLE A TO B</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Constraints Used in DDL</h3>
+      <ul>
+        <li><strong>PRIMARY KEY</strong> – Uniquely identifies each row</li>
+        <li><strong>FOREIGN KEY</strong> – Links two tables</li>
+        <li><strong>NOT NULL</strong> – Field cannot be empty</li>
+        <li><strong>UNIQUE</strong> – All values must be distinct</li>
+        <li><strong>CHECK</strong> – Enforces a condition</li>
+        <li><strong>DEFAULT</strong> – Assigns a default value</li>
+      </ul>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> DDL commands form the backbone of database schema management. They allow DBAs and developers to precisely define the structure of the data to be stored, enforce integrity constraints, and evolve the schema over time without losing data unnecessarily.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q2 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q2</span>
+      <span class="q-title">Differentiate Entity Set and Attribute with Suitable Examples</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>In the Entity-Relationship (ER) model, the two fundamental building blocks are <strong>Entities</strong> and <strong>Attributes</strong>. Understanding the difference is crucial for designing a good database schema.</p>
+
+      <h3>Entity and Entity Set</h3>
+      <p>An <strong>Entity</strong> is a real-world object or concept that has an independent existence and can be distinctly identified. An <strong>Entity Set</strong> is a collection of similar entities that share the same properties.</p>
+      <ul>
+        <li>A <strong>Student</strong> in a college</li>
+        <li>A <strong>Book</strong> in a library</li>
+        <li>A <strong>Bank Account</strong> in a bank</li>
+      </ul>
+      <pre><code>Entity Set: Student
+{(101, Alice, CSE), (102, Bob, ECE), (103, Carol, MECH)}</code></pre>
+
+      <h3>Attribute</h3>
+      <p>An <strong>Attribute</strong> is a property or characteristic that describes an entity. For a <code>Student</code> entity: StudentID, Name, Age, Department, Email.</p>
+
+      <h3>Types of Attributes</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Description</th><th>Example</th><th>ER Symbol</th></tr></thead>
+          <tbody>
+            <tr><td>Simple (Atomic)</td><td>Cannot be divided further</td><td>Age, StudentID</td><td>Single ellipse</td></tr>
+            <tr><td>Composite</td><td>Can be divided into sub-parts</td><td>Name → FirstName + LastName</td><td>Ellipse with children</td></tr>
+            <tr><td>Single-Valued</td><td>Holds one value per entity</td><td>StudentID</td><td>Single ellipse</td></tr>
+            <tr><td>Multi-Valued</td><td>Can hold multiple values</td><td>PhoneNumber</td><td>Double ellipse</td></tr>
+            <tr><td>Derived</td><td>Computed from other attributes</td><td>Age from DateOfBirth</td><td>Dashed ellipse</td></tr>
+            <tr><td>Key</td><td>Uniquely identifies each entity</td><td>StudentID</td><td>Underlined ellipse</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Comparison Table: Entity Set vs Attribute</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Entity Set</th><th>Attribute</th></tr></thead>
+          <tbody>
+            <tr><td>Definition</td><td>Collection of similar entities</td><td>Property describing an entity</td></tr>
+            <tr><td>Representation</td><td>Rectangle in ER diagram</td><td>Ellipse in ER diagram</td></tr>
+            <tr><td>Independence</td><td>Exists independently</td><td>Depends on entity</td></tr>
+            <tr><td>Example</td><td>Student, Employee, Book</td><td>Name, Age, StudentID</td></tr>
+            <tr><td>Contains</td><td>Multiple instances (rows)</td><td>Single/multiple values</td></tr>
+            <tr><td>Has relationships</td><td>Yes</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>ER Diagram – Library Example</h3>
+      <pre><code>         BookID (key — underlined)
+                 |
+Title ─────── [Book] ─────── Author
+                 |
+            Publisher</code></pre>
+      <p>Here: <strong>Book</strong> = Entity &nbsp;|&nbsp; <strong>BookID, Title, Author, Publisher</strong> = Attributes &nbsp;|&nbsp; All Books together = <strong>Entity Set</strong></p>
+
+      <h3>Real-World Example: Hospital System</h3>
+      <ul>
+        <li><strong>Entity Sets:</strong> Patient, Doctor, Ward</li>
+        <li><strong>Attributes of Patient:</strong> PatientID <em>(Key)</em>, Name <em>(Composite)</em>, DOB <em>(Simple)</em>, Age <em>(Derived)</em>, PhoneNumbers <em>(Multi-valued)</em>, Address <em>(Composite)</em></li>
+      </ul>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Entity sets represent the "things" we store data about, while attributes represent the "details" about those things. A well-designed ER model correctly identifies all entities and their attributes before translating into relational tables.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q3 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q3</span>
+      <span class="q-title">Demonstrate Database Operations – Creating a Table and Retrieving Records Using SQL</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>SQL (Structured Query Language) is the standard language for interacting with relational databases. Database operations include creating tables (DDL), inserting data (DML), and retrieving records (DQL).</p>
+
+      <h3>Step 1: Create the Database and Table</h3>
+      <pre><code><span class="kw">CREATE DATABASE</span> CollegeDB;
+<span class="kw">USE</span> CollegeDB;
+
+<span class="kw">CREATE TABLE</span> Student (
+    StudentID   <span class="typ">INT</span> <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+    Name        <span class="typ">VARCHAR</span>(50) <span class="kw">NOT NULL</span>,
+    Age         <span class="typ">INT</span>,
+    Department  <span class="typ">VARCHAR</span>(30),
+    CGPA        <span class="typ">DECIMAL</span>(3,2),
+    City        <span class="typ">VARCHAR</span>(30)
+);</code></pre>
+
+      <h3>Step 2: Insert Records (DML – INSERT)</h3>
+      <pre><code><span class="kw">INSERT INTO</span> Student (Name, Age, Department, CGPA, City)
+<span class="kw">VALUES</span>
+(<span class="str">'Alice'</span>,  20, <span class="str">'CSE'</span>,  9.1, <span class="str">'Chennai'</span>),
+(<span class="str">'Bob'</span>,    21, <span class="str">'ECE'</span>,  8.3, <span class="str">'Mumbai'</span>),
+(<span class="str">'Carol'</span>,  19, <span class="str">'MECH'</span>, 7.5, <span class="str">'Delhi'</span>),
+(<span class="str">'David'</span>,  22, <span class="str">'CSE'</span>,  8.8, <span class="str">'Bangalore'</span>),
+(<span class="str">'Eva'</span>,    20, <span class="str">'IT'</span>,   9.4, <span class="str">'Chennai'</span>),
+(<span class="str">'Grace'</span>,  23, <span class="str">'CSE'</span>,  7.2, <span class="str">'Mumbai'</span>);</code></pre>
+
+      <h3>Step 3: Retrieve Records (DQL – SELECT)</h3>
+      <pre><code><span class="cmt">-- a) All records</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Student;
+
+<span class="cmt">-- b) Specific columns</span>
+<span class="kw">SELECT</span> Name, Department, CGPA <span class="kw">FROM</span> Student;
+
+<span class="cmt">-- c) With WHERE condition</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Student <span class="kw">WHERE</span> Department = <span class="str">'CSE'</span>;
+
+<span class="cmt">-- d) Multiple conditions</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Student <span class="kw">WHERE</span> Department = <span class="str">'CSE'</span> <span class="kw">AND</span> CGPA &gt; 8.5;
+
+<span class="cmt">-- e) ORDER BY</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Student <span class="kw">ORDER BY</span> CGPA <span class="kw">DESC</span>;
+
+<span class="cmt">-- f) LIMIT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Student <span class="kw">ORDER BY</span> CGPA <span class="kw">DESC LIMIT</span> 3;
+
+<span class="cmt">-- g) Aggregate functions</span>
+<span class="kw">SELECT</span> Department, <span class="fn">AVG</span>(CGPA) <span class="kw">AS</span> Avg_CGPA <span class="kw">FROM</span> Student <span class="kw">GROUP BY</span> Department;
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> Total_Students <span class="kw">FROM</span> Student;
+<span class="kw">SELECT</span> <span class="fn">MAX</span>(CGPA) <span class="kw">AS</span> Highest, <span class="fn">MIN</span>(CGPA) <span class="kw">AS</span> Lowest <span class="kw">FROM</span> Student;
+
+<span class="cmt">-- h) HAVING clause</span>
+<span class="kw">SELECT</span> Department, <span class="fn">AVG</span>(CGPA) <span class="kw">AS</span> Avg_CGPA
+<span class="kw">FROM</span> Student
+<span class="kw">GROUP BY</span> Department
+<span class="kw">HAVING</span> <span class="fn">AVG</span>(CGPA) &gt; 8.0;</code></pre>
+
+      <h3>Step 4: Update and Delete</h3>
+      <pre><code><span class="kw">UPDATE</span> Student <span class="kw">SET</span> CGPA = 9.5 <span class="kw">WHERE</span> StudentID = 3;
+<span class="kw">DELETE FROM</span> Student <span class="kw">WHERE</span> CGPA &lt; 7.0;</code></pre>
+
+      <h3>Step 5: JOIN Query (Two Tables)</h3>
+      <pre><code><span class="kw">SELECT</span> S.Name, S.Department, C.CourseName
+<span class="kw">FROM</span> Student S
+<span class="kw">INNER JOIN</span> Courses C <span class="kw">ON</span> S.StudentID = C.StudentID;</code></pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Clause</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>WHERE</td><td>Filter rows based on condition</td></tr>
+            <tr><td>ORDER BY</td><td>Sort result set</td></tr>
+            <tr><td>GROUP BY</td><td>Group rows for aggregation</td></tr>
+            <tr><td>HAVING</td><td>Filter groups after aggregation</td></tr>
+            <tr><td>LIMIT</td><td>Restrict number of rows returned</td></tr>
+            <tr><td>JOIN</td><td>Combine rows from multiple tables</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> SQL provides a rich set of commands to create, populate, and query databases efficiently. Using SELECT with WHERE, ORDER BY, GROUP BY, HAVING, and JOINs enables precise data retrieval for real-world applications.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q4 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q4</span>
+      <span class="q-title">Apply DDL, DML, and DCL Commands in a Banking Application</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <ul>
+        <li><strong>DDL (Data Definition Language)</strong> – Defines database structure (CREATE, ALTER, DROP)</li>
+        <li><strong>DML (Data Manipulation Language)</strong> – Manipulates data (INSERT, UPDATE, DELETE, SELECT)</li>
+        <li><strong>DCL (Data Control Language)</strong> – Controls access (GRANT, REVOKE)</li>
+      </ul>
+
+      <h3>DDL Commands – Creating Banking Tables</h3>
+      <pre><code><span class="kw">CREATE DATABASE</span> BankDB;
+<span class="kw">USE</span> BankDB;
+
+<span class="kw">CREATE TABLE</span> Customer (
+    CustomerID   <span class="typ">INT</span> <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+    Name         <span class="typ">VARCHAR</span>(50) <span class="kw">NOT NULL</span>,
+    Address      <span class="typ">VARCHAR</span>(100),
+    Phone        <span class="typ">VARCHAR</span>(15) <span class="kw">UNIQUE</span>,
+    Email        <span class="typ">VARCHAR</span>(50)
+);
+
+<span class="kw">CREATE TABLE</span> Account (
+    AccountNo    <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>,
+    CustomerID   <span class="typ">INT</span>,
+    AccountType  <span class="typ">VARCHAR</span>(20) <span class="kw">CHECK</span> (AccountType <span class="kw">IN</span> (<span class="str">'Savings'</span>,<span class="str">'Current'</span>)),
+    Balance      <span class="typ">DECIMAL</span>(12,2) <span class="kw">DEFAULT</span> 0.00,
+    OpenDate     <span class="typ">DATE</span>,
+    <span class="kw">FOREIGN KEY</span> (CustomerID) <span class="kw">REFERENCES</span> Customer(CustomerID)
+);
+
+<span class="kw">CREATE TABLE</span> Transactions (
+    TransID     <span class="typ">INT</span> <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+    AccountNo   <span class="typ">INT</span>,
+    TxnType     <span class="typ">VARCHAR</span>(10) <span class="kw">CHECK</span> (TxnType <span class="kw">IN</span> (<span class="str">'Credit'</span>,<span class="str">'Debit'</span>)),
+    Amount      <span class="typ">DECIMAL</span>(12,2),
+    TxnDate     <span class="typ">DATETIME</span> <span class="kw">DEFAULT</span> CURRENT_TIMESTAMP,
+    <span class="kw">FOREIGN KEY</span> (AccountNo) <span class="kw">REFERENCES</span> Account(AccountNo)
+);</code></pre>
+
+      <h3>DML Commands – Data Operations</h3>
+      <pre><code><span class="cmt">-- INSERT</span>
+<span class="kw">INSERT INTO</span> Customer (Name, Address, Phone, Email)
+<span class="kw">VALUES</span> (<span class="str">'Ravi Kumar'</span>, <span class="str">'Chennai'</span>, <span class="str">'9876543210'</span>, <span class="str">'ravi@email.com'</span>);
+
+<span class="kw">INSERT INTO</span> Account (AccountNo, CustomerID, AccountType, Balance, OpenDate)
+<span class="kw">VALUES</span> (1001, 1, <span class="str">'Savings'</span>, 50000.00, <span class="str">'2023-01-15'</span>);
+
+<span class="cmt">-- UPDATE: Deposit Rs. 10,000</span>
+<span class="kw">UPDATE</span> Account <span class="kw">SET</span> Balance = Balance + 10000 <span class="kw">WHERE</span> AccountNo = 1001;
+
+<span class="cmt">-- UPDATE: Withdraw Rs. 5,000</span>
+<span class="kw">UPDATE</span> Account <span class="kw">SET</span> Balance = Balance - 5000
+<span class="kw">WHERE</span> AccountNo = 1001 <span class="kw">AND</span> Balance &gt;= 5000;
+
+<span class="cmt">-- DELETE</span>
+<span class="kw">DELETE FROM</span> Customer <span class="kw">WHERE</span> CustomerID = 5;
+
+<span class="cmt">-- SELECT with JOIN</span>
+<span class="kw">SELECT</span> C.Name, A.AccountNo, A.AccountType, A.Balance
+<span class="kw">FROM</span> Customer C
+<span class="kw">JOIN</span> Account A <span class="kw">ON</span> C.CustomerID = A.CustomerID
+<span class="kw">WHERE</span> A.AccountNo = 1001;</code></pre>
+
+      <h3>DCL Commands – Access Control</h3>
+      <pre><code><span class="cmt">-- Create users</span>
+<span class="kw">CREATE USER</span> <span class="str">'bank_teller'</span>@<span class="str">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="str">'Teller@123'</span>;
+<span class="kw">CREATE USER</span> <span class="str">'bank_manager'</span>@<span class="str">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="str">'Manager@456'</span>;
+<span class="kw">CREATE USER</span> <span class="str">'auditor'</span>@<span class="str">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="str">'Audit@789'</span>;
+
+<span class="cmt">-- GRANT permissions</span>
+<span class="kw">GRANT</span> SELECT, INSERT <span class="kw">ON</span> BankDB.Transactions <span class="kw">TO</span> <span class="str">'bank_teller'</span>@<span class="str">'localhost'</span>;
+<span class="kw">GRANT ALL PRIVILEGES ON</span> BankDB.* <span class="kw">TO</span> <span class="str">'bank_manager'</span>@<span class="str">'localhost'</span>;
+<span class="kw">GRANT</span> SELECT <span class="kw">ON</span> BankDB.* <span class="kw">TO</span> <span class="str">'auditor'</span>@<span class="str">'localhost'</span>;
+
+<span class="cmt">-- REVOKE permission</span>
+<span class="kw">REVOKE</span> DELETE <span class="kw">ON</span> BankDB.Transactions <span class="kw">FROM</span> <span class="str">'bank_teller'</span>@<span class="str">'localhost'</span>;
+
+<span class="fn">FLUSH PRIVILEGES</span>;</code></pre>
+
+      <h3>Summary Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Category</th><th>Command</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>DDL</td><td>CREATE</td><td>Create tables</td></tr>
+            <tr><td>DDL</td><td>ALTER</td><td>Modify table structure</td></tr>
+            <tr><td>DDL</td><td>DROP</td><td>Delete table</td></tr>
+            <tr><td>DML</td><td>INSERT</td><td>Add new records</td></tr>
+            <tr><td>DML</td><td>UPDATE</td><td>Modify existing records</td></tr>
+            <tr><td>DML</td><td>DELETE</td><td>Remove records</td></tr>
+            <tr><td>DML</td><td>SELECT</td><td>Retrieve records</td></tr>
+            <tr><td>DCL</td><td>GRANT</td><td>Give user permissions</td></tr>
+            <tr><td>DCL</td><td>REVOKE</td><td>Remove user permissions</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> DDL, DML, and DCL commands together provide complete control over a database system. In a banking scenario, DDL defines the schema, DML handles daily transactions, and DCL ensures security and controlled access to sensitive financial data.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q5 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q5</span>
+      <span class="q-title">What is Normalization? Explain 3NF, BCNF, and 4NF with Examples</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>What is Normalization?</h3>
+      <p><strong>Normalization</strong> is the process of organizing a relational database to reduce data redundancy and improve data integrity. It decomposes tables into smaller, well-structured tables following a set of rules called <strong>Normal Forms (NF)</strong>.</p>
+
+      <h3>Benefits of Normalization</h3>
+      <ol>
+        <li><strong>Eliminates redundancy</strong> – Avoids storing the same data multiple times</li>
+        <li><strong>Prevents update anomalies</strong> – One update doesn't require changing many rows</li>
+        <li><strong>Prevents insertion anomalies</strong> – Data can be inserted without unrelated data</li>
+        <li><strong>Prevents deletion anomalies</strong> – Deleting one fact doesn't lose another</li>
+        <li><strong>Improves performance</strong> – Smaller, focused tables are faster to query</li>
+        <li><strong>Ensures consistency</strong> – Single source of truth for each fact</li>
+      </ol>
+
+      <h3>Normal Forms Overview</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Normal Form</th><th>Requirement</th></tr></thead>
+          <tbody>
+            <tr><td>1NF</td><td>Atomic values, no repeating groups</td></tr>
+            <tr><td>2NF</td><td>1NF + No partial dependencies</td></tr>
+            <tr><td>3NF</td><td>2NF + No transitive dependencies</td></tr>
+            <tr><td>BCNF</td><td>3NF + Every determinant is a candidate key</td></tr>
+            <tr><td>4NF</td><td>BCNF + No multi-valued dependencies</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Third Normal Form (3NF)</h3>
+      <p><strong>Definition:</strong> A relation is in 3NF if it is in 2NF and no non-prime attribute is transitively dependent on the primary key.</p>
+      <p><strong>Transitive Dependency:</strong> A → B → C, where A is PK and C depends on A through B.</p>
+      <p><strong>Example – Violation:</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>StudentID</th><th>Name</th><th>ZipCode</th><th>City</th></tr></thead>
+          <tbody>
+            <tr><td>101</td><td>Alice</td><td>600001</td><td>Chennai</td></tr>
+            <tr><td>102</td><td>Bob</td><td>400001</td><td>Mumbai</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><code>StudentID → ZipCode → City</code> — City is transitively dependent. Violates 3NF.</p>
+      <p><strong>After 3NF Decomposition:</strong></p>
+      <pre><code>Student(StudentID, Name, ZipCode)
+ZipLocation(ZipCode, City)</code></pre>
+
+      <h3>Boyce-Codd Normal Form (BCNF)</h3>
+      <p><strong>Definition:</strong> For every functional dependency X → Y, X must be a <strong>superkey</strong>. BCNF is stronger than 3NF.</p>
+      <p><strong>Example – Violation:</strong> <code>CourseEnrollment(StudentID, Course, Instructor)</code></p>
+      <ul>
+        <li><code>{StudentID, Course} → Instructor</code></li>
+        <li><code>Instructor → Course</code> ← Instructor is NOT a superkey → violates BCNF</li>
+      </ul>
+      <p><strong>After BCNF Decomposition:</strong></p>
+      <pre><code>InstructorCourse(Instructor, Course)
+StudentInstructor(StudentID, Instructor)</code></pre>
+
+      <h3>Fourth Normal Form (4NF)</h3>
+      <p><strong>Definition:</strong> A relation is in 4NF if it is in BCNF and has no multi-valued dependencies (MVD). If A →→ B, then for each value of A, there are multiple independent values of B.</p>
+      <p><strong>Example – Violation:</strong> <code>Employee(EmpID, Skill, Hobby)</code></p>
+      <p><code>EmpID →→ Skill</code> and <code>EmpID →→ Hobby</code> independently → causes redundancy.</p>
+      <p><strong>After 4NF Decomposition:</strong></p>
+      <pre><code>EmpSkill(EmpID, Skill)
+EmpHobby(EmpID, Hobby)</code></pre>
+
+      <h3>Comparison: 3NF vs BCNF vs 4NF</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>3NF</th><th>BCNF</th><th>4NF</th></tr></thead>
+          <tbody>
+            <tr><td>Eliminates transitive dependency</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Every determinant is candidate key</td><td>Not required</td><td>Required</td><td>Required</td></tr>
+            <tr><td>Handles multi-valued dependencies</td><td>No</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Lossless decomposition</td><td>Yes</td><td>Sometimes</td><td>Yes</td></tr>
+            <tr><td>Dependency preservation</td><td>Yes</td><td>May not</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Normalization is essential for building a clean, efficient, and consistent database. 3NF removes transitive dependencies, BCNF strengthens it by requiring every determinant to be a candidate key, and 4NF eliminates multi-valued dependencies. Each level builds upon the previous to ensure higher data integrity.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q6 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q6</span>
+      <span class="q-title">Illustrate an ER Model for a Library Management System</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>An <strong>Entity-Relationship (ER) Model</strong> is a high-level conceptual data model used to describe the structure of a database. For a <strong>Library Management System (LMS)</strong>, the ER model captures all entities, their attributes, and relationships.</p>
+
+      <h3>Entities and Their Attributes</h3>
+
+      <h4>1. Member</h4>
+      <ul>
+        <li><strong>MemberID</strong> <em>(Primary Key)</em></li>
+        <li>Name <em>(Composite: FirstName, LastName)</em></li>
+        <li>Address <em>(Composite: Street, City, PinCode)</em></li>
+        <li>Phone <em>(Multi-valued)</em>, Email</li>
+        <li>MembershipType <em>(Regular / Premium)</em>, MembershipExpiry</li>
+      </ul>
+
+      <h4>2. Book</h4>
+      <ul>
+        <li><strong>BookID</strong> <em>(Primary Key)</em></li>
+        <li>Title, ISBN <em>(Unique)</em>, Publisher, Year, Genre</li>
+        <li>TotalCopies, AvailableCopies</li>
+      </ul>
+
+      <h4>3. Author</h4>
+      <ul>
+        <li><strong>AuthorID</strong> <em>(Primary Key)</em>, Name, Nationality</li>
+      </ul>
+
+      <h4>4. Staff</h4>
+      <ul>
+        <li><strong>StaffID</strong> <em>(Primary Key)</em>, Name, Role, Phone</li>
+      </ul>
+
+      <h4>5. BorrowRecord</h4>
+      <ul>
+        <li><strong>RecordID</strong> <em>(Primary Key)</em></li>
+        <li>BorrowDate, DueDate, ReturnDate <em>(Nullable)</em></li>
+        <li>Fine <em>(Derived)</em></li>
+      </ul>
+
+      <h3>Relationships and Cardinality</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Relationship</th><th>Entities Involved</th><th>Cardinality</th><th>Participation</th></tr></thead>
+          <tbody>
+            <tr><td>Writes</td><td>Author – Book</td><td>Many-to-Many (M:N)</td><td>Total on Book side</td></tr>
+            <tr><td>Borrows</td><td>Member – Book</td><td>M:N through BorrowRecord</td><td>Partial on Member</td></tr>
+            <tr><td>Manages</td><td>Staff – BorrowRecord</td><td>One-to-Many (1:N)</td><td>Total on BorrowRecord</td></tr>
+            <tr><td>Has</td><td>Book – BorrowRecord</td><td>One-to-Many (1:N)</td><td>Total on BorrowRecord</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>ER Diagram (Text Representation)</h3>
+      <pre><code>[Author] ──&lt;Writes&gt;── [Book] ──&lt;Has&gt;── [BorrowRecord]
+                          |                       |
+                       &lt;Borrows&gt;             &lt;Manages&gt;
+                          |                       |
+                       [Member]               [Staff]</code></pre>
+
+      <h3>SQL Schema from ER Model</h3>
+      <pre><code><span class="kw">CREATE TABLE</span> Author (
+    AuthorID <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>, Name <span class="typ">VARCHAR</span>(50), Nationality <span class="typ">VARCHAR</span>(30)
+);
+<span class="kw">CREATE TABLE</span> Book (
+    BookID <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>, Title <span class="typ">VARCHAR</span>(100),
+    ISBN <span class="typ">VARCHAR</span>(20) <span class="kw">UNIQUE</span>, Publisher <span class="typ">VARCHAR</span>(50),
+    Year <span class="typ">INT</span>, Genre <span class="typ">VARCHAR</span>(30), AvailableCopies <span class="typ">INT</span> <span class="kw">DEFAULT</span> 0
+);
+<span class="kw">CREATE TABLE</span> Member (
+    MemberID <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>, FirstName <span class="typ">VARCHAR</span>(30), LastName <span class="typ">VARCHAR</span>(30),
+    Phone <span class="typ">VARCHAR</span>(15), Email <span class="typ">VARCHAR</span>(50), MembershipType <span class="typ">VARCHAR</span>(20)
+);
+<span class="cmt">-- Many-to-Many: Author writes Book</span>
+<span class="kw">CREATE TABLE</span> Writes (
+    AuthorID <span class="typ">INT</span>, BookID <span class="typ">INT</span>,
+    <span class="kw">PRIMARY KEY</span> (AuthorID, BookID),
+    <span class="kw">FOREIGN KEY</span> (AuthorID) <span class="kw">REFERENCES</span> Author(AuthorID),
+    <span class="kw">FOREIGN KEY</span> (BookID) <span class="kw">REFERENCES</span> Book(BookID)
+);
+<span class="kw">CREATE TABLE</span> BorrowRecord (
+    RecordID <span class="typ">INT</span> <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+    MemberID <span class="typ">INT</span>, BookID <span class="typ">INT</span>, StaffID <span class="typ">INT</span>,
+    BorrowDate <span class="typ">DATE</span>, DueDate <span class="typ">DATE</span>, ReturnDate <span class="typ">DATE</span>,
+    Fine <span class="typ">DECIMAL</span>(8,2) <span class="kw">DEFAULT</span> 0,
+    <span class="kw">FOREIGN KEY</span> (MemberID) <span class="kw">REFERENCES</span> Member(MemberID),
+    <span class="kw">FOREIGN KEY</span> (BookID) <span class="kw">REFERENCES</span> Book(BookID)
+);</code></pre>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> The ER model for the Library Management System identifies 5 main entities: Member, Book, Author, Staff, and BorrowRecord. The relationships with proper cardinality constraints ensure the database design accurately reflects real-world library operations.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q7 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q7</span>
+      <span class="q-title">ACID Properties – Examine and Implement in Transaction Processing</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p><strong>ACID</strong> stands for <strong>Atomicity, Consistency, Isolation, and Durability</strong>. These four properties guarantee reliable transaction processing in a DBMS, especially under concurrent access and system failures.</p>
+
+      <h3>a) Atomicity</h3>
+      <p><strong>Definition:</strong> A transaction is treated as a single unit — it either <strong>completely succeeds</strong> or <strong>completely fails</strong>. Any partial failure causes a full rollback.</p>
+      <pre><code><span class="kw">START TRANSACTION</span>;
+<span class="kw">UPDATE</span> Account <span class="kw">SET</span> Balance = Balance - 5000 <span class="kw">WHERE</span> AccountNo = 1001;
+<span class="kw">UPDATE</span> Account <span class="kw">SET</span> Balance = Balance + 5000 <span class="kw">WHERE</span> AccountNo = 1002;
+<span class="kw">COMMIT</span>;   <span class="cmt">-- If both succeed</span>
+<span class="cmt">-- ROLLBACK;  If any step fails</span></code></pre>
+
+      <h3>b) Consistency</h3>
+      <p><strong>Definition:</strong> A transaction must bring the database from one <strong>valid state to another valid state</strong>, maintaining all defined constraints and integrity rules.</p>
+      <pre><code><span class="cmt">-- Balance cannot go below 0</span>
+<span class="kw">ALTER TABLE</span> Account <span class="kw">ADD CONSTRAINT</span> chk_balance <span class="kw">CHECK</span> (Balance &gt;= 0);
+<span class="cmt">-- Before: A=10000, B=5000, Total=15000</span>
+<span class="cmt">-- After transfer: A=7000, B=8000, Total=15000 ✓</span></code></pre>
+
+      <h3>c) Isolation</h3>
+      <p><strong>Definition:</strong> Concurrent transactions execute <strong>independently</strong>. The intermediate state of one transaction is not visible to others until committed.</p>
+      <pre><code><span class="kw">SET TRANSACTION ISOLATION LEVEL</span> SERIALIZABLE;
+<span class="kw">START TRANSACTION</span>;
+<span class="kw">SELECT</span> Balance <span class="kw">FROM</span> Account <span class="kw">WHERE</span> AccountNo = 1001;
+<span class="kw">COMMIT</span>;</code></pre>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Isolation Level</th><th>Dirty Read</th><th>Non-Repeatable Read</th><th>Phantom Read</th></tr></thead>
+          <tbody>
+            <tr><td>READ UNCOMMITTED</td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td>READ COMMITTED</td><td>Prevented</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td>REPEATABLE READ</td><td>Prevented</td><td>Prevented</td><td>Possible</td></tr>
+            <tr><td>SERIALIZABLE</td><td>Prevented</td><td>Prevented</td><td>Prevented</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>d) Durability</h3>
+      <p><strong>Definition:</strong> Once a transaction is <strong>committed</strong>, its changes are <strong>permanently saved</strong> — even if the system crashes immediately afterward.</p>
+      <pre><code><span class="cmt">-- Write-Ahead Logging (WAL)</span>
+<span class="cmt">-- Before change: write log entry to stable storage</span>
+<span class="cmt">-- On restart after crash: re-apply committed changes from log</span>
+<span class="kw">START TRANSACTION</span>;
+<span class="kw">UPDATE</span> Account <span class="kw">SET</span> Balance = 7000 <span class="kw">WHERE</span> AccountNo = 1001;
+<span class="kw">COMMIT</span>; <span class="cmt">-- Permanently persisted to disk</span></code></pre>
+
+      <h3>ACID Summary</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Guarantees</th><th>Mechanism</th></tr></thead>
+          <tbody>
+            <tr><td>Atomicity</td><td>All-or-nothing execution</td><td>ROLLBACK / COMMIT</td></tr>
+            <tr><td>Consistency</td><td>Valid state before and after</td><td>Constraints, triggers</td></tr>
+            <tr><td>Isolation</td><td>No interference between transactions</td><td>Locks, MVCC</td></tr>
+            <tr><td>Durability</td><td>Committed data survives crashes</td><td>WAL, checkpoints</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> ACID properties are the foundation of reliable database systems. Atomicity prevents partial updates, Consistency ensures rule compliance, Isolation handles concurrency, and Durability ensures data survival across failures.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q8 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q8</span>
+      <span class="q-title">Compare Conflict Serializability and View Serializability in DBMS</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>In a multi-user DBMS, <strong>serializability</strong> ensures correctness of concurrent schedules. A schedule is serializable if its result equals some serial (sequential) execution. Two types exist: <strong>Conflict Serializability</strong> and <strong>View Serializability</strong>.</p>
+
+      <h3>Conflict Serializability</h3>
+      <p><strong>Definition:</strong> A schedule is conflict serializable if it can be transformed into a serial schedule by swapping <strong>non-conflicting operations</strong>.</p>
+      <p><strong>Conflicting operations</strong> belong to different transactions, access the same data, and at least one is a Write:</p>
+      <ul>
+        <li>Read-Write (R-W) — conflict</li>
+        <li>Write-Read (W-R) — conflict</li>
+        <li>Write-Write (W-W) — conflict</li>
+        <li>Read-Read (R-R) — <em>no conflict</em></li>
+      </ul>
+
+      <h4>Testing – Precedence Graph</h4>
+      <pre><code>Schedule: R1(A), W2(A), R1(B), W1(B), W2(B)
+
+Conflicts:
+  R1(A) before W2(A): T1 → T2  (R-W conflict)
+  W1(B) before W2(B): T1 → T2  (W-W conflict)
+
+Precedence graph: T1 → T2  (no cycle)
+→ CONFLICT SERIALIZABLE
+Equivalent serial schedule: T1, then T2</code></pre>
+
+      <h3>View Serializability</h3>
+      <p><strong>Definition:</strong> A schedule S is view serializable if it is view equivalent to some serial schedule S'.</p>
+      <p><strong>Three conditions for view equivalence:</strong></p>
+      <ol>
+        <li><strong>Initial Read:</strong> If Ti reads the initial value of X in S, Ti reads initial value in S'</li>
+        <li><strong>Updated Read:</strong> If Ti reads value written by Tj in S, same in S'</li>
+        <li><strong>Final Write:</strong> If Ti performs the final write on X in S, Ti does so in S'</li>
+      </ol>
+      <pre><code>Schedule with blind write:
+T1: W(A)
+T2:      W(A)
+T3:           R(A)
+
+→ NOT conflict serializable (W-W then R depends on ordering)
+→ IS view serializable (view equivalent to T1, T2, T3)</code></pre>
+
+      <h3>Comparison Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Conflict Serializability</th><th>View Serializability</th></tr></thead>
+          <tbody>
+            <tr><td>Basis</td><td>Conflict equivalence</td><td>View equivalence</td></tr>
+            <tr><td>Testing method</td><td>Precedence graph (cycle detection)</td><td>Match reads and final writes</td></tr>
+            <tr><td>Complexity</td><td>Polynomial O(n²)</td><td>NP-complete</td></tr>
+            <tr><td>Scope</td><td>Narrower</td><td>Broader</td></tr>
+            <tr><td>Blind writes</td><td>Cannot handle</td><td>Can handle</td></tr>
+            <tr><td>Practical use</td><td>Widely used in real RDBMS</td><td>Theoretically important</td></tr>
+            <tr><td>Relationship</td><td>Is always view serializable</td><td>May not be conflict serializable</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Conflict serializability is the practical standard used in real systems — efficient to check via precedence graph. View serializability is broader but NP-complete to verify. Every conflict serializable schedule is view serializable, but not vice versa.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q9 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q9</span>
+      <span class="q-title">Examine Single-Level and Multi-Level Indexing for Large Databases</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p><strong>Indexing</strong> is a data structure technique to quickly locate records without full table scans. It works like a book's index — jump directly to the relevant page rather than reading every page.</p>
+
+      <h3>Single-Level Indexing</h3>
+      <p><strong>Definition:</strong> A single level of index entries pointing directly to data blocks on disk.</p>
+
+      <h4>Types of Single-Level Indexes</h4>
+      <pre><code>1. Primary Index (on primary key — sparse):
+   E001 → Block 1
+   E004 → Block 2
+
+2. Clustering Index (on non-key ordered field):
+   CSE → Block 1
+   ECE → Block 3
+
+3. Secondary Index (on non-ordering field — dense):
+   Alice → Block 3, Offset 2
+   Bob   → Block 1, Offset 5</code></pre>
+
+      <p><strong>Limitations of Single-Level Indexing:</strong></p>
+      <ul>
+        <li>As database grows, the index file itself becomes very large</li>
+        <li>Searching a large index still requires many disk I/Os</li>
+        <li>Insertions/deletions require costly index reorganization</li>
+      </ul>
+
+      <h3>Multi-Level Indexing</h3>
+      <p><strong>Definition:</strong> Builds an index on top of the index, creating a hierarchy. Each higher level points to the level below.</p>
+      <pre><code>Level 3 (Root Index)    ── 1 block
+        ↓
+Level 2 (Intermediate)  ── few blocks
+        ↓
+Level 1 (Base Index)    ── many blocks
+        ↓
+Data File               ── thousands of blocks</code></pre>
+
+      <h4>B+ Tree – Most Common Multi-Level Index</h4>
+      <p>A self-balancing tree where internal nodes hold keys and pointers; leaf nodes hold data pointers and are linked together for range queries.</p>
+      <pre><code>B+ Tree (Order 3):
+          [30 | 60]
+         /    |    \
+    [10|20] [40|50] [70|80]
+       ↓       ↓       ↓
+    Data     Data    Data
+
+Search for 40:
+  Root: 40 &gt; 30, 40 &lt; 60 → go middle child
+  [40|50]: found! → access data block
+  Total: 2 disk I/Os</code></pre>
+
+      <h3>Performance Comparison (1 Million Records)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Metric</th><th>Single-Level</th><th>Multi-Level (B+ Tree)</th></tr></thead>
+          <tbody>
+            <tr><td>Disk I/Os (1M records)</td><td>~15</td><td>~4</td></tr>
+            <tr><td>Search time</td><td>O(log n) on index</td><td>O(log<sub>p</sub> n) — much faster</td></tr>
+            <tr><td>Index update</td><td>Costly reorganization</td><td>Self-balancing</td></tr>
+            <tr><td>Range queries</td><td>Slow</td><td>Very fast (linked leaves)</td></tr>
+            <tr><td>Storage overhead</td><td>Low-medium</td><td>Medium</td></tr>
+            <tr><td>Practical use</td><td>Small-medium DBs</td><td>All large production DBs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Single-level indexing is simple and suitable for small databases. For large-scale systems with millions of records, multi-level indexing (especially B+ Trees) is far more efficient, offering O(log<sub>p</sub> n) search with minimal disk I/Os. All modern RDBMS (MySQL, PostgreSQL, Oracle) use B+ Trees as their default indexing mechanism.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q10 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q10</span>
+      <span class="q-title">SQL Queries Using IN, LIKE, BETWEEN, and EXISTS Operators</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Sample Table Setup</h3>
+      <pre><code><span class="kw">CREATE TABLE</span> Employee (
+    EmpID <span class="typ">INT</span> <span class="kw">PRIMARY KEY</span>, Name <span class="typ">VARCHAR</span>(50),
+    Dept <span class="typ">VARCHAR</span>(30), Salary <span class="typ">DECIMAL</span>(10,2),
+    City <span class="typ">VARCHAR</span>(30), JoinDate <span class="typ">DATE</span>
+);
+<span class="kw">INSERT INTO</span> Employee <span class="kw">VALUES</span>
+(1, <span class="str">'Alice'</span>, <span class="str">'HR'</span>, 55000, <span class="str">'Chennai'</span>, <span class="str">'2020-01-15'</span>),
+(2, <span class="str">'Bob'</span>, <span class="str">'IT'</span>, 75000, <span class="str">'Mumbai'</span>, <span class="str">'2019-06-01'</span>),
+(3, <span class="str">'Carol'</span>, <span class="str">'Finance'</span>, 65000, <span class="str">'Delhi'</span>, <span class="str">'2021-03-10'</span>),
+(4, <span class="str">'David'</span>, <span class="str">'IT'</span>, 85000, <span class="str">'Bangalore'</span>, <span class="str">'2018-09-20'</span>),
+(5, <span class="str">'Grace'</span>, <span class="str">'IT'</span>, 90000, <span class="str">'Delhi'</span>, <span class="str">'2017-04-15'</span>);</code></pre>
+
+      <h3>1. IN Operator</h3>
+      <p>Checks if a value matches any value in a list or subquery.</p>
+      <pre><code><span class="cmt">-- Basic IN</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> Dept <span class="kw">IN</span> (<span class="str">'IT'</span>, <span class="str">'Finance'</span>);
+
+<span class="cmt">-- NOT IN</span>
+<span class="kw">SELECT</span> Name, Dept <span class="kw">FROM</span> Employee
+<span class="kw">WHERE</span> City <span class="kw">NOT IN</span> (<span class="str">'Chennai'</span>, <span class="str">'Mumbai'</span>);
+
+<span class="cmt">-- IN with Subquery</span>
+<span class="kw">SELECT</span> Name, Salary <span class="kw">FROM</span> Employee
+<span class="kw">WHERE</span> Dept <span class="kw">IN</span> (
+    <span class="kw">SELECT</span> DeptName <span class="kw">FROM</span> Department <span class="kw">WHERE</span> Budget &gt; 250000
+);</code></pre>
+
+      <h3>2. LIKE Operator</h3>
+      <p>Pattern matching: <code>%</code> = zero or more characters, <code>_</code> = exactly one character.</p>
+      <pre><code><span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> Name <span class="kw">LIKE</span> <span class="str">'A%'</span>;       <span class="cmt">-- starts with A</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> Name <span class="kw">LIKE</span> <span class="str">'%l'</span>;       <span class="cmt">-- ends with l</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> Name <span class="kw">LIKE</span> <span class="str">'%ra%'</span>;     <span class="cmt">-- contains 'ra'</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> Name <span class="kw">LIKE</span> <span class="str">'___'</span>;      <span class="cmt">-- exactly 3 characters</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee <span class="kw">WHERE</span> City <span class="kw">LIKE</span> <span class="str">'_elhi'</span>;   <span class="cmt">-- Delhi</span></code></pre>
+
+      <h3>3. BETWEEN Operator</h3>
+      <p>Selects values within a given range — <strong>inclusive</strong> of both endpoints.</p>
+      <pre><code><span class="cmt">-- Salary range</span>
+<span class="kw">SELECT</span> Name, Salary <span class="kw">FROM</span> Employee
+<span class="kw">WHERE</span> Salary <span class="kw">BETWEEN</span> 60000 <span class="kw">AND</span> 80000;
+
+<span class="cmt">-- Date range</span>
+<span class="kw">SELECT</span> Name, JoinDate <span class="kw">FROM</span> Employee
+<span class="kw">WHERE</span> JoinDate <span class="kw">BETWEEN</span> <span class="str">'2019-01-01'</span> <span class="kw">AND</span> <span class="str">'2021-12-31'</span>;
+
+<span class="cmt">-- NOT BETWEEN</span>
+<span class="kw">SELECT</span> Name, Salary <span class="kw">FROM</span> Employee
+<span class="kw">WHERE</span> Salary <span class="kw">NOT BETWEEN</span> 60000 <span class="kw">AND</span> 80000;</code></pre>
+
+      <h3>4. EXISTS Operator</h3>
+      <p>Returns TRUE if the subquery returns at least one row.</p>
+      <pre><code><span class="cmt">-- Employees in dept with budget &gt; 400,000</span>
+<span class="kw">SELECT</span> E.Name, E.Dept
+<span class="kw">FROM</span> Employee E
+<span class="kw">WHERE EXISTS</span> (
+    <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> Department D
+    <span class="kw">WHERE</span> D.DeptName = E.Dept <span class="kw">AND</span> D.Budget &gt; 400000
+);
+
+<span class="cmt">-- NOT EXISTS: Depts with no high earners</span>
+<span class="kw">SELECT</span> DeptName <span class="kw">FROM</span> Department D
+<span class="kw">WHERE NOT EXISTS</span> (
+    <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> Employee E
+    <span class="kw">WHERE</span> E.Dept = D.DeptName <span class="kw">AND</span> E.Salary &gt; 80000
+);</code></pre>
+
+      <h3>Summary</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operator</th><th>Purpose</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>IN</td><td>Match any value in list</td><td><code>WHERE Dept IN ('IT','HR')</code></td></tr>
+            <tr><td>NOT IN</td><td>Exclude values in list</td><td><code>WHERE City NOT IN ('Delhi')</code></td></tr>
+            <tr><td>LIKE</td><td>Pattern matching</td><td><code>WHERE Name LIKE 'A%'</code></td></tr>
+            <tr><td>NOT LIKE</td><td>Exclude pattern matches</td><td><code>WHERE Name NOT LIKE '%ra%'</code></td></tr>
+            <tr><td>BETWEEN</td><td>Range check (inclusive)</td><td><code>WHERE Salary BETWEEN 50000 AND 80000</code></td></tr>
+            <tr><td>EXISTS</td><td>Check if subquery has rows</td><td><code>WHERE EXISTS (SELECT ...)</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> IN, LIKE, BETWEEN, and EXISTS are essential SQL operators for precise data retrieval. IN simplifies multiple OR conditions, LIKE enables pattern matching, BETWEEN provides clean range filters, and EXISTS enables existence checks with correlated subqueries.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q11 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q11</span>
+      <span class="q-title">Functional Dependency and Minimal Cover – E = {B→A, D→A, AB→D}</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>A <strong>Functional Dependency (FD)</strong> X → Y means that for every value of X, there is exactly one value of Y. The <strong>Minimal Cover (Canonical Cover)</strong> is the smallest equivalent set of FDs with no redundancies.</p>
+
+      <h3>Given: E = {B → A, D → A, AB → D}</h3>
+
+      <h3>Algorithm to Find Minimal Cover (3 Steps)</h3>
+
+      <h4>Step 1: Simplify Right-Hand Sides</h4>
+      <p>Ensure each FD has a single attribute on the RHS.</p>
+      <pre><code>B  → A  ✓  (already single)
+D  → A  ✓  (already single)
+AB → D  ✓  (already single)
+
+Current set: {B → A, D → A, AB → D}  ← No change needed</code></pre>
+
+      <h4>Step 2: Remove Extraneous Attributes from LHS</h4>
+      <p>Check each FD with multiple LHS attributes. Only <strong>AB → D</strong> qualifies.</p>
+      <pre><code>Check if A is extraneous in AB → D:
+  Remove A, check if B⁺ contains D using remaining FDs.
+
+  Compute B⁺ using {B → A, D → A, AB → D}:
+    Start: B⁺ = {B}
+    B → A:  add A  →  B⁺ = {B, A}
+    AB → D: B⁺ has both A and B → add D  →  B⁺ = {B, A, D}
+    D → A:  A already in B⁺
+
+  Final B⁺ = {A, B, D}
+  Since D ∈ B⁺, A is EXTRANEOUS in AB → D
+  Replace AB → D with B → D
+
+Updated set: {B → A, D → A, B → D}</code></pre>
+
+      <h4>Step 3: Remove Redundant FDs</h4>
+      <pre><code>Check B → A:
+  Remove B → A. Remaining: {D → A, B → D}
+  Compute B⁺:
+    B → D: add D  →  B⁺ = {B, D}
+    D → A: add A  →  B⁺ = {B, D, A}
+  A ∈ B⁺ → B → A is derivable → REDUNDANT → Remove it
+
+Updated set: {D → A, B → D}
+
+Check D → A: Remove it. Remaining: {B → D}
+  Compute D⁺ = {D} — cannot reach A.
+  A ∉ D⁺ → D → A is NOT redundant → Keep it.
+
+Check B → D: Remove it. Remaining: {D → A}
+  Compute B⁺ = {B} — cannot reach D.
+  D ∉ B⁺ → B → D is NOT redundant → Keep it.</code></pre>
+
+      <h3>Final Minimal Cover</h3>
+      <pre><code>Minimal Cover of E = { B → D,  D → A }</code></pre>
+
+      <h3>Verification</h3>
+      <ul>
+        <li><strong>B → D</strong> (direct)</li>
+        <li><strong>B → A</strong> (via B → D → A) ✓ covers original B → A</li>
+        <li><strong>D → A</strong> (direct) ✓ covers original D → A</li>
+        <li><strong>AB → D</strong>: Since B → D, this is covered ✓</li>
+      </ul>
+
+      <h3>Step Summary</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Step</th><th>Action</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Initial</td><td>Given FDs</td><td>{B→A, D→A, AB→D}</td></tr>
+            <tr><td>Step 1</td><td>Simplify RHS</td><td>No change needed</td></tr>
+            <tr><td>Step 2</td><td>Remove extraneous A from AB→D</td><td>Replace with B→D → {B→A, D→A, B→D}</td></tr>
+            <tr><td>Step 3</td><td>Remove redundant B→A</td><td>{D→A, B→D}</td></tr>
+            <tr><td><strong>Final</strong></td><td><strong>Minimal Cover</strong></td><td><strong>{B→D, D→A}</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> The minimal cover of E = {B→A, D→A, AB→D} is <strong>{B→D, D→A}</strong>. This is the most compact, non-redundant set of FDs that preserves all original dependencies. Minimal covers are essential in 3NF synthesis to minimize schema complexity.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q12 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q12</span>
+      <span class="q-title">NoSQL Models for E-Commerce – Key-Value, Document, Column-Family, Graph</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p><strong>NoSQL (Not Only SQL)</strong> databases are non-relational databases designed for large-scale, flexible, high-performance storage. Unlike RDBMS, they do not require a fixed schema, making them ideal for unstructured or semi-structured data.</p>
+
+      <h3>1. Key-Value Store</h3>
+      <p><strong>Structure:</strong> Data stored as simple key-value pairs. <strong>Examples:</strong> Redis, DynamoDB</p>
+      <pre><code>Key: "cart:user123"
+Value: {"items": [{"productID": "P001", "qty": 2}]}
+
+Key: "session:abc456"
+Value: {"userID": "U123", "loginTime": "2024-01-10 10:30"}</code></pre>
+      <p><strong>Best for:</strong> Session management, shopping carts, caching. O(1) lookups.</p>
+
+      <h3>2. Document Store (Best for E-Commerce)</h3>
+      <p><strong>Structure:</strong> JSON/BSON documents. <strong>Examples:</strong> MongoDB, CouchDB</p>
+      <pre><code>{
+  "_id": "P001",
+  "name": "Samsung Galaxy S24",
+  "category": "Electronics",
+  "price": 79999,
+  "specifications": {"RAM": "8GB", "Camera": "50MP"},
+  "tags": ["smartphone", "android", "5G"],
+  "stock": 150
+}</code></pre>
+      <pre><code><span class="cmt">// MongoDB: Find electronics under Rs. 50,000</span>
+db.products.<span class="fn">find</span>({ category: <span class="str">"Electronics"</span>, price: { $lt: 50000 } })
+
+<span class="cmt">// Average rating for a product</span>
+db.reviews.<span class="fn">aggregate</span>([
+  { $match: { productID: <span class="str">"P001"</span> } },
+  { $group: { _id: <span class="str">"$productID"</span>, avgRating: { $avg: <span class="str">"$rating"</span> } } }
+])</code></pre>
+
+      <h3>3. Column-Family Store</h3>
+      <p><strong>Structure:</strong> Rows with column families. <strong>Examples:</strong> Apache Cassandra, HBase</p>
+      <pre><code>Row Key: "P001"
+  Column Family: product_info
+    name: "Samsung Galaxy S24", price: 79999
+  Column Family: ratings
+    avg_rating: 4.5, total_reviews: 234</code></pre>
+      <p><strong>Best for:</strong> Analytics, inventory tracking, time-series data.</p>
+
+      <h3>4. Graph Database</h3>
+      <p><strong>Structure:</strong> Nodes and edges. <strong>Examples:</strong> Neo4j, Amazon Neptune</p>
+      <pre><code>(User: Alice) --[PURCHASED]--> (Product: Galaxy S24)
+(Product: Galaxy S24) --[SIMILAR_TO]--> (Product: iPhone 15)
+
+<span class="cmt">// Neo4j: Find recommendations for Alice</span>
+MATCH (u:User {name:"Alice"})-[:PURCHASED]->(p:Product)
+      -[:SIMILAR_TO]->(rec:Product)
+WHERE NOT (u)-[:PURCHASED]->(rec)
+RETURN rec.name AS Recommendation</code></pre>
+
+      <h3>NoSQL Model Comparison for E-Commerce</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Key-Value</th><th>Document</th><th>Column-Family</th><th>Graph</th></tr></thead>
+          <tbody>
+            <tr><td>Product catalog</td><td>Poor</td><td><strong>Excellent</strong></td><td>Good</td><td>Poor</td></tr>
+            <tr><td>Reviews &amp; ratings</td><td>Poor</td><td><strong>Excellent</strong></td><td>Good</td><td>Good</td></tr>
+            <tr><td>Shopping cart</td><td><strong>Excellent</strong></td><td>Good</td><td>Poor</td><td>Poor</td></tr>
+            <tr><td>Recommendations</td><td>Poor</td><td>Poor</td><td>Poor</td><td><strong>Excellent</strong></td></tr>
+            <tr><td>Analytics</td><td>Poor</td><td>Good</td><td><strong>Excellent</strong></td><td>Poor</td></tr>
+            <tr><td>Schema flexibility</td><td>Low</td><td><strong>High</strong></td><td>Medium</td><td>Medium</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> The Document Store model (MongoDB) is the best primary choice for e-commerce product details, reviews, and ratings. A hybrid architecture combining Redis (cart/caching), MongoDB (products/orders), Cassandra (analytics), and Neo4j (recommendations) delivers a highly scalable, performant system.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q13 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q13</span>
+      <span class="q-title">Examine the Techniques Used for Deadlock Resolution in Databases</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p>A <strong>deadlock</strong> occurs when two or more transactions wait indefinitely for each other to release locks, creating a cycle of dependencies where no transaction can proceed.</p>
+      <pre><code>T1: Lock(A) → Request Lock(B) → WAITING for T2
+T2: Lock(B) → Request Lock(A) → WAITING for T1
+→ Neither can proceed. Deadlock!</code></pre>
+
+      <h3>Deadlock Prevention Techniques</h3>
+      <p>Ensure that the conditions for deadlock can never arise.</p>
+
+      <h4>1. Wait-Die Scheme (Non-Preemptive)</h4>
+      <ul>
+        <li>If Ti is <strong>older</strong> than Tj: Ti <strong>waits</strong></li>
+        <li>If Ti is <strong>younger</strong> than Tj: Ti <strong>dies</strong> (rolls back and restarts)</li>
+      </ul>
+      <pre><code>T1 (older, ts=5) wants lock held by T2 (newer, ts=10) → T1 waits
+T2 (newer, ts=10) wants lock held by T1 (older, ts=5) → T2 dies</code></pre>
+
+      <h4>2. Wound-Wait Scheme (Preemptive)</h4>
+      <ul>
+        <li>If Ti is <strong>older</strong> than Tj: Ti <strong>wounds</strong> Tj (forces Tj to rollback)</li>
+        <li>If Ti is <strong>younger</strong> than Tj: Ti <strong>waits</strong></li>
+      </ul>
+
+      <h4>3. Resource Ordering</h4>
+      <p>Assign a global ordering to all resources. Transactions must request resources in that fixed order — eliminates circular wait.</p>
+
+      <h3>Deadlock Detection Techniques</h3>
+      <p>Allow deadlocks to occur, then detect and recover.</p>
+
+      <h4>1. Wait-For Graph</h4>
+      <ul>
+        <li>Nodes = Transactions</li>
+        <li>Edge Ti → Tj means Ti is waiting for Tj to release a lock</li>
+        <li>A <strong>cycle</strong> in the graph = Deadlock detected</li>
+      </ul>
+      <pre><code>Wait-For Graph:
+T1 → T2 → T3 → T1   ← Cycle! Deadlock detected.
+
+Algorithm:
+  1. Maintain wait-for graph
+  2. Periodically run DFS cycle detection
+  3. Cycle found → select victim → rollback</code></pre>
+
+      <h4>2. Timeout-Based Detection</h4>
+      <p>If a transaction waits longer than a threshold → assume deadlock → rollback. Simple but may rollback non-deadlocked transactions.</p>
+
+      <h3>Deadlock Recovery – Victim Selection</h3>
+      <ul>
+        <li>Minimum rollback cost (least work done)</li>
+        <li>Minimum number of locks held</li>
+        <li>Oldest or newest transaction (policy-based)</li>
+        <li>Lowest priority transaction</li>
+      </ul>
+      <p><strong>Starvation Prevention:</strong> Track rollback count — avoid repeatedly selecting the same victim.</p>
+
+      <h3>Comparison Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Technique</th><th>Type</th><th>Approach</th><th>Overhead</th><th>Use Case</th></tr></thead>
+          <tbody>
+            <tr><td>Wait-Die</td><td>Prevention</td><td>Timestamp</td><td>Low</td><td>High contention</td></tr>
+            <tr><td>Wound-Wait</td><td>Prevention</td><td>Timestamp</td><td>Medium</td><td>High contention</td></tr>
+            <tr><td>Resource Ordering</td><td>Prevention</td><td>Fixed order</td><td>Low</td><td>Predictable access</td></tr>
+            <tr><td>Wait-For Graph</td><td>Detection</td><td>Graph cycle</td><td>Medium</td><td>General purpose</td></tr>
+            <tr><td>Timeout</td><td>Detection</td><td>Timer</td><td>Very Low</td><td>Simple systems</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Deadlock is an inherent challenge in concurrent database systems. Prevention (Wait-Die, Wound-Wait, Resource Ordering) avoids deadlocks before they occur. Detection (Wait-For Graph, Timeout) identifies and resolves them after. Modern RDBMS like MySQL and PostgreSQL use wait-for graph detection with victim rollback.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q14 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q14</span>
+      <span class="q-title">Log-Based Recovery Techniques in DBMS</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p><strong>Recovery management</strong> restores the database to a consistent state after failures (crash, power failure, disk errors). <strong>Log-based recovery</strong> maintains a sequential record of all modifications, enabling redo and undo of changes.</p>
+
+      <h3>Types of Failures</h3>
+      <ul>
+        <li><strong>Transaction failure</strong> – Logic error or deadlock</li>
+        <li><strong>System crash</strong> – OS failure, power outage</li>
+        <li><strong>Disk failure</strong> – Physical damage to storage</li>
+      </ul>
+
+      <h3>The Log File</h3>
+      <p>An append-only file recording every database operation before it is applied. Format: <code>&lt;Transaction, Item, Old Value, New Value&gt;</code></p>
+      <pre><code>&lt;T1, Start&gt;
+&lt;T1, A, 500, 300&gt;    -- T1 changes A from 500 to 300
+&lt;T1, B, 200, 500&gt;    -- T1 changes B from 200 to 500
+&lt;T1, Commit&gt;         -- T1 committed successfully
+&lt;T2, Start&gt;
+&lt;T2, C, 1000, 800&gt;
+&lt;T2, Abort&gt;          -- T2 aborted</code></pre>
+
+      <h3>Write-Ahead Logging (WAL) Protocol</h3>
+      <p><strong>Rule:</strong> Before any data block is written to disk, its log record must be written to stable storage first. This ensures enough information to redo or undo changes after a crash.</p>
+
+      <h3>Recovery Techniques</h3>
+
+      <h4>1. Deferred Update (No-Undo / Redo)</h4>
+      <p>Database not updated until transaction commits. On failure: ignore uncommitted transactions (no undo needed). On recovery: redo committed transactions from log.</p>
+      <pre><code>&lt;T1, Start&gt;
+&lt;T1, A, -, 300&gt;    -- deferred (old value not stored)
+&lt;T1, Commit&gt;       -- NOW apply A=300 to database
+
+Crash before commit → A not changed → No undo needed</code></pre>
+
+      <h4>2. Immediate Update (Undo / Redo)</h4>
+      <p>Database updated as operations execute. Log includes old and new values. On failure: undo uncommitted, redo committed transactions.</p>
+      <pre><code>Log at crash time:
+  &lt;T1, Start&gt;
+  &lt;T1, A, 500, 300&gt;  ← T1 changed A
+  &lt;T1, Commit&gt;       ← T1 committed ✓
+  &lt;T2, Start&gt;
+  &lt;T2, B, 200, 500&gt;  ← T2 changed B
+  *** CRASH ***       ← T2 not committed ✗
+
+Recovery:
+  REDO T1: Set A = 300
+  UNDO T2: Set B = 200  (restore old value)</code></pre>
+
+      <h3>Checkpoint-Based Recovery</h3>
+      <p>Periodically flush dirty pages to disk and write a checkpoint record — avoids scanning the entire log on recovery.</p>
+      <pre><code>&lt;T1, Commit&gt;
+&lt;CHECKPOINT {T2}&gt;   -- T1 already safe on disk
+&lt;T2, Start&gt;
+&lt;T2, B, 200, 500&gt;
+*** CRASH ***
+
+Recovery: Start from checkpoint
+  T2 active at checkpoint → UNDO T2
+  T1 already checkpointed → No redo needed</code></pre>
+
+      <h3>ARIES Recovery Algorithm</h3>
+      <p>Used by DB2, SQL Server, PostgreSQL. Three phases:</p>
+      <ol>
+        <li><strong>Analysis Phase:</strong> Scan from last checkpoint → find dirty pages and active transactions at crash time</li>
+        <li><strong>Redo Phase:</strong> Redo all logged operations to bring database to crash state</li>
+        <li><strong>Undo Phase:</strong> Undo operations of all transactions that were active (not committed) at crash</li>
+      </ol>
+
+      <h3>Summary</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Technique</th><th>Updates Applied</th><th>Undo Needed</th><th>Redo Needed</th></tr></thead>
+          <tbody>
+            <tr><td>Deferred Update</td><td>After commit</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Immediate Update</td><td>Before commit</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Shadow Paging</td><td>After commit</td><td>No</td><td>No</td></tr>
+            <tr><td>ARIES</td><td>Before commit</td><td>Yes</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> Log-based recovery is the industry standard for database durability. WAL ensures logs are always ahead of actual writes. Checkpoints reduce recovery time. ARIES provides a robust three-phase recovery mechanism used in most modern production databases.</div>
+    </div>
+  </details>
+
+  <!-- ═══════════════════════════════════════════════════════ Q15 -->
+  <details class="q-card">
+    <summary class="q-toggle">
+      <span class="q-num">Q15</span>
+      <span class="q-title">RAID Levels – Comparison Based on Redundancy, Performance, and Cost</span>
+      <span class="q-marks">16 Marks</span>
+      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="q-body">
+      <h3>Introduction</h3>
+      <p><strong>RAID (Redundant Array of Independent Disks)</strong> is a storage technology combining multiple physical drives into one logical unit to improve performance, reliability, or both. Different RAID levels offer different trade-offs.</p>
+
+      <h3>RAID 0 – Striping (No Redundancy)</h3>
+      <p>Data is split across multiple disks in blocks. Reads and writes happen in parallel.</p>
+      <pre><code>Data: [A1][A2][A3][A4]
+Disk 1: [A1][A3]
+Disk 2: [A2][A4]</code></pre>
+      <ul>
+        <li><strong>Redundancy:</strong> None — one disk failure loses all data</li>
+        <li><strong>Performance:</strong> Read &amp; Write: Excellent</li>
+        <li><strong>Storage Efficiency:</strong> 100%</li>
+        <li><strong>Min Disks:</strong> 2</li>
+        <li><strong>Use Case:</strong> Video editing, gaming</li>
+      </ul>
+
+      <h3>RAID 1 – Mirroring</h3>
+      <p>Data duplicated across two disks identically.</p>
+      <pre><code>Disk 1: [A1][A2][A3]  (original)
+Disk 2: [A1][A2][A3]  (mirror)</code></pre>
+      <ul>
+        <li><strong>Redundancy:</strong> Excellent — survives 1 disk failure</li>
+        <li><strong>Performance:</strong> Read: Good | Write: Slower</li>
+        <li><strong>Storage Efficiency:</strong> 50%</li>
+        <li><strong>Use Case:</strong> OS drives, critical databases</li>
+      </ul>
+
+      <h3>RAID 5 – Striping with Distributed Parity</h3>
+      <p>Data striped; parity distributed across all disks. Parity enables recovery from one disk failure.</p>
+      <pre><code>Disk 1: [A1][B1][C1][P_D]
+Disk 2: [A2][B2][P_C][D2]
+Disk 3: [A3][P_B][C3][D3]
+Disk 4: [P_A][B4][C4][D4]</code></pre>
+      <ul>
+        <li><strong>Redundancy:</strong> Good — survives 1 disk failure</li>
+        <li><strong>Storage Efficiency:</strong> (n-1)/n × 100% — e.g., 75% for 4 disks</li>
+        <li><strong>Min Disks:</strong> 3</li>
+        <li><strong>Use Case:</strong> File servers, NAS systems</li>
+      </ul>
+
+      <h3>RAID 6 – Double Distributed Parity</h3>
+      <p>Like RAID 5 but with two parity blocks per stripe — survives two simultaneous disk failures.</p>
+      <ul>
+        <li><strong>Redundancy:</strong> Excellent — survives 2 failures</li>
+        <li><strong>Storage Efficiency:</strong> (n-2)/n × 100%</li>
+        <li><strong>Min Disks:</strong> 4</li>
+        <li><strong>Use Case:</strong> Archives, cloud storage, hospitals</li>
+      </ul>
+
+      <h3>RAID 10 (1+0) – Mirroring + Striping</h3>
+      <p>Combines RAID 1 (mirroring) and RAID 0 (striping) for maximum performance and redundancy.</p>
+      <pre><code>RAID 0 stripe →  [Mirror Pair 1]    [Mirror Pair 2]
+                  Disk1 | Disk2      Disk3 | Disk4
+                   A1   |  A1         A2   |  A2</code></pre>
+      <ul>
+        <li><strong>Redundancy:</strong> Excellent — multiple failures (one per pair)</li>
+        <li><strong>Performance:</strong> Read &amp; Write: Excellent</li>
+        <li><strong>Storage Efficiency:</strong> 50%</li>
+        <li><strong>Min Disks:</strong> 4</li>
+        <li><strong>Use Case:</strong> High-performance databases, OLTP</li>
+      </ul>
+
+      <h3>Full Comparison Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>RAID Level</th><th>Redundancy</th><th>Read</th><th>Write</th><th>Storage Eff.</th><th>Min Disks</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>RAID 0</td><td>None</td><td>Excellent</td><td>Excellent</td><td>100%</td><td>2</td><td>Gaming, temp data</td></tr>
+            <tr><td>RAID 1</td><td>1 failure</td><td>Good</td><td>Moderate</td><td>50%</td><td>2</td><td>OS, critical files</td></tr>
+            <tr><td>RAID 5</td><td>1 failure</td><td>Excellent</td><td>Moderate</td><td>(n-1)/n</td><td>3</td><td>File servers</td></tr>
+            <tr><td>RAID 6</td><td>2 failures</td><td>Good</td><td>Slow</td><td>(n-2)/n</td><td>4</td><td>Archives, cloud</td></tr>
+            <tr><td>RAID 10</td><td>Multiple</td><td>Excellent</td><td>Excellent</td><td>50%</td><td>4</td><td>Databases, OLTP</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Organizational Use Cases</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Organization</th><th>RAID Choice</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>Banking</td><td>RAID 10</td><td>High performance + high reliability</td></tr>
+            <tr><td>Web server</td><td>RAID 5</td><td>Balance of speed, space, redundancy</td></tr>
+            <tr><td>Video studio</td><td>RAID 0</td><td>Maximum speed, temporary data</td></tr>
+            <tr><td>Hospital records</td><td>RAID 6</td><td>Critical data, 2-disk failure tolerance</td></tr>
+            <tr><td>Small business</td><td>RAID 1</td><td>Simple, reliable, easy recovery</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box"><strong>Conclusion:</strong> RAID provides essential data redundancy and performance improvements. RAID 0 maximizes performance with no fault tolerance; RAID 1 and RAID 10 offer high reliability; RAID 5 balances efficiency and redundancy; RAID 6 provides maximum fault tolerance. Selection depends on the organization's balance of speed, reliability, and budget.</div>
+    </div>
+  </details>
+
+</div><!-- /wrapper -->
+
+<footer class="site-footer">
+  DBMS 16-Mark Answer Guide &nbsp;&middot;&nbsp; Semester Examination &nbsp;&middot;&nbsp; 15 Questions Covered
+</footer>
+
+<script>
+  function toggleAll(open) {
+    document.querySelectorAll('details.q-card').forEach(d => {
+      if (open) d.setAttribute('open', '');
+      else d.removeAttribute('open');
+    });
+  }
+</script>
+</body>
+</html>
